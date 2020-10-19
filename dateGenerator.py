@@ -1,19 +1,38 @@
 import datetime
+import os
+from datetime import timedelta
 import random
 import xlwt
 
 # 设定开始日期并格式化
-dateStart = input("请输入周一的日期:")
-dt = datetime.datetime.strptime(dateStart,"%Y-%m-%d")
-dateEnd = (dt + datetime.timedelta(days=4)).strftime("%Y-%m-%d")
+print("输入1自行输入日期，输入其他字符自动选择上周一")
+now = datetime.datetime.now()
+choise = input()
+if choise == str(1):
+    dateStart = input("请输入周一的日期:")
+    dt = datetime.datetime.strptime(dateStart,"%Y-%m-%d")
+    dateEnd = (dt + datetime.timedelta(days=4)).strftime("%Y-%m-%d")
 
-dateStart=datetime.datetime.strptime(dateStart,'%Y-%m-%d')
-dateEnd=datetime.datetime.strptime(dateEnd,'%Y-%m-%d')
-date_list = []
-date_list.append(dateStart.strftime('%Y/%m/%d'))
-while dateStart<dateEnd:
-    dateStart += datetime.timedelta(days=+1)
+    dateStart=datetime.datetime.strptime(dateStart,'%Y-%m-%d')
+    dateEnd=datetime.datetime.strptime(dateEnd,'%Y-%m-%d')
+    date_list = []
     date_list.append(dateStart.strftime('%Y/%m/%d'))
+    while dateStart<dateEnd:
+        dateStart += datetime.timedelta(days=+1)
+        date_list.append(dateStart.strftime('%Y/%m/%d'))
+else:
+    dateStart = now - timedelta(days = now.weekday() + 7)
+    dateStart = dateStart.strftime("%Y-%m-%d")
+    dt = datetime.datetime.strptime(dateStart,"%Y-%m-%d")
+    dateEnd = (dt + datetime.timedelta(days=4)).strftime("%Y-%m-%d")
+
+    dateStart=datetime.datetime.strptime(dateStart,'%Y-%m-%d')
+    dateEnd=datetime.datetime.strptime(dateEnd,'%Y-%m-%d')
+    date_list = []
+    date_list.append(dateStart.strftime('%Y/%m/%d'))
+    while dateStart<dateEnd:
+        dateStart += datetime.timedelta(days=+1)
+        date_list.append(dateStart.strftime('%Y/%m/%d'))
 
 # 创建时间
 a = 0
@@ -61,3 +80,10 @@ sh1.write(9,0,dateGenerator[8])
 sh1.write(10,0,dateGenerator[9])
 
 wb.save('日期.xls')
+
+# 校验文件是否存在
+check = os.path.isfile("日期.xls")
+if check == True:
+    print("已成功完成任务")
+else:
+    print("遇到迷之问题。。")
