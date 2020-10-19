@@ -26,8 +26,6 @@ while a<10:
     second = random.randint(10,59)
     mtime = str(0) + str(moring) + ":" + str(mminute) + ":" + str(second)
     etime = str(eveing) + ":" + str(eminute) + ":" + str(second)
-    mtime
-    etime
     a = a+1
     time_list.append(mtime)
     time_list.append(etime)
