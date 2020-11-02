@@ -38,10 +38,10 @@ else:
 a = 0
 time_list = []
 while a<10:
-    moring = 9
-    eveing = random.randint(18,19)
-    mminute = random.randint(25,35)
-    eminute = random.randint(10,50)
+    moring = 8
+    eveing = random.randint(17,18)
+    mminute = random.randint(45,59)
+    eminute = random.randint(30,59)
     second = random.randint(10,59)
     mtime = str(0) + str(moring) + ":" + str(mminute) + ":" + str(second)
     etime = str(eveing) + ":" + str(eminute) + ":" + str(second)
