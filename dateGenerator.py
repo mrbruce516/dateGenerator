@@ -2,7 +2,8 @@ import datetime
 import os
 from datetime import timedelta
 import random
-import xlwt
+import xlrd
+from xlutils.copy import copy
 
 # 设定开始日期并格式化
 print("输入1自行输入日期，输入其他字符自动选择上周一")
@@ -20,7 +21,7 @@ def useDate():
     
         dateStart=datetime.datetime.strptime(dateStart,'%Y-%m-%d')
         dateEnd=datetime.datetime.strptime(dateEnd,'%Y-%m-%d')
-        date_list = []
+        date_list = dateList
         date_list.append(dateStart.strftime('%Y/%m/%d'))
         while dateStart<dateEnd:
             dateStart += datetime.timedelta(days=+1)
@@ -72,10 +73,11 @@ def splice():
 
 # 创建函数完毕并调用
 useDate()
-# 创建xls文件
-wb = xlwt.Workbook()
+# 打开excel文件
+rb = xlrd.open_workbook("考勤大法好.xls")
+wb = copy(rb)
 
-sh1 = wb.add_sheet('日期')
+sh1 = wb.get_sheet(0)
 
 people = int(input("请输入需要生成的打卡人数"))
 # 生成时间库
@@ -85,15 +87,15 @@ while timeLib < people:
     timeLib += 1
 
 genFreq = people * 10
-xlsLine = 0
-while xlsLine < genFreq:
-    sh1.write(xlsLine,0,dateGenerator[xlsLine])
+xlsLine = 1
+while xlsLine < genFreq+1:
+    sh1.write(xlsLine,4,dateGenerator[xlsLine-1])
     xlsLine += 1
 
-wb.save('日期.xls')
+wb.save('考勤大法好.xls')
 
 # 校验文件是否存在
-check = os.path.isfile("日期.xls")
+check = os.path.isfile("考勤大法好.xls")
 if check == True:
     print("已成功完成任务")
 else:
